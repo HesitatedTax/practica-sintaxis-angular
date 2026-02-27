@@ -1,8 +1,47 @@
-import { Component } from '@angular/core';
+import { JsonPipe } from '@angular/common';
+import { Component, signal, OnChanges, ChangeDetectionStrategy, computed } from '@angular/core';
+import { Title } from '@shared/title/title';
 
 @Component({
   selector: 'app-change-detection',
-  imports: [],
-  templateUrl: './change-detection.html',
+  imports: [Title, JsonPipe],
+  template:`
+    <app-title [title]="currentFramework()"></app-title>
+
+  <pre> {{frameworkAsSignal() | json }}</pre>
+  <pre> {{frameworkAsProperty | json }}</pre>
+  `
+
 })
-export default class ChangeDetection { }
+export default class ChangeDetection {
+
+  currentFramework = computed(
+    ()=> `Change detection - ${this.frameworkAsSignal().name}`
+  )
+
+  frameworkAsSignal= signal({
+    name: 'Angular',
+    releaseDate: 2016,
+  })
+
+  frameworkAsProperty = {
+    name: 'Angular',
+    releaseDate: 2016,
+  };
+
+  constructor(){
+    setTimeout(() =>{
+
+      this.frameworkAsSignal.update(value => ({
+        ...value,
+        name: 'React'
+      }))
+      // this.frameworkAsProperty.name = 'React';
+      console.log('Hecho');
+    },3000
+
+    )
+
+  }
+
+ }
