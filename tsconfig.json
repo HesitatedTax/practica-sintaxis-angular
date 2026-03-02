@@ -7,6 +7,8 @@
       "@shared/*": ["./src/app/shared/*"],
       "@services/*": ["./src/app/services/*"],
       "@dashboard/*": ["./src/app/dashboard/*"],
+      "@interfaces/*": ["./src/app/interfaces/*"],
+
 
 
 
